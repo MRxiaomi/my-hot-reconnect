@@ -36,12 +36,24 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Resource
     private ApplicationContext applicationContext;
 
-    private JedisConnectionFactory jedisConnectionFactory() {
+    /**
+     * 总结：如果不使用连接池，每次都会创建一个Jedis连接，可以实现动态切换
+     *      如果使用连接池，连接池的连接与redis保持长连接，则不可以实现动态切换
+     *      因此，需要确认 redis 客户端是否支持多数据源
+     *
+     *      MySQL也有该问题，直接使用druid连接池，更新了配置不会生效
+     *      因此需要使用AbstractRoutingDataSource，生成新的数据源并可同时使用多个数据源
+     * @return
+     */
+    @Bean
+    public JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(config.getProperty("redis.host","localhost123"));
         redisStandaloneConfiguration.setPort(Integer.valueOf(config.getProperty("redis.port","6379")));
         redisStandaloneConfiguration.setDatabase(Integer.valueOf(config.getProperty("redis.database","0")));
-        return new JedisConnectionFactory(redisStandaloneConfiguration);
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
+        jedisConnectionFactory.setUsePool(true);
+        return jedisConnectionFactory;
     }
 
     @Bean("redisTemplate")
