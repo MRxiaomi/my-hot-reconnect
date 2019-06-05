@@ -1,17 +1,16 @@
 package com.lym.myhotreconnect.web;
 
-import com.lym.myhotreconnect.domain.User;
+import com.lym.myhotreconnect.model.domain.User;
 import com.lym.myhotreconnect.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Optional;
 
 @RestController
-public class UserController {
+public class MysqlUserController {
     @Resource
     private UserService userService;
 

@@ -1,7 +1,5 @@
-package com.lym.myhotreconnect.domain;
+package com.lym.myhotreconnect.model.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "user")

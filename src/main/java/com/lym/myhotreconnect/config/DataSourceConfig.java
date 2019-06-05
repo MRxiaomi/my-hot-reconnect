@@ -41,7 +41,7 @@ public class DataSourceConfig{
         druidDataSource.setUrl(config.getProperty("data.source.url","dataSourceDefaultUrl"));
         druidDataSource.setUsername(config.getProperty("data.source.username","dataSourceDefaultUsername"));
         druidDataSource.setPassword(config.getProperty("data.source.password",""));
-        druidDataSource.setDefaultReadOnly(Boolean.valueOf( config.getProperty("data.source.readonly","false")));
+        druidDataSource.setDefaultReadOnly(Boolean.valueOf(config.getProperty("data.source.readonly","false")));
         return druidDataSource;
     }
 

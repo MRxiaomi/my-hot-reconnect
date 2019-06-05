@@ -1,6 +1,6 @@
 package com.lym.myhotreconnect.mapper;
 
-import com.lym.myhotreconnect.domain.User;
+import com.lym.myhotreconnect.model.domain.User;
 import tk.mybatis.mapper.common.ConditionMapper;
 import tk.mybatis.mapper.common.ExampleMapper;
 import tk.mybatis.mapper.common.IdsMapper;

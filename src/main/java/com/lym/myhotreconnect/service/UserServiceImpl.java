@@ -1,8 +1,7 @@
 package com.lym.myhotreconnect.service;
 
-import com.lym.myhotreconnect.domain.User;
-
 import com.lym.myhotreconnect.mapper.UserMapper;
+import com.lym.myhotreconnect.model.domain.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
