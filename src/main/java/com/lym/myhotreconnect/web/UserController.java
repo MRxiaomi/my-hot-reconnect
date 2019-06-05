@@ -19,4 +19,10 @@ public class UserController {
     public String findUserById(@PathVariable("id") Integer id){
         return Optional.ofNullable(userService.findUserById(id)).orElseGet(User::new).toString();
     }
+
+    @GetMapping("/user/save")
+    public String save(User user){
+        userService.save(user);
+        return "save done";
+    }
 }
