@@ -36,12 +36,17 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Resource
     private ApplicationContext applicationContext;
 
+    /**
+     * 纠正：使用连接池也能切换缓存配置，因为这里切换的是JedisConnectionFactory，在进行缓存操作的时候从连接工厂获取连接（类似数据源）
+     * @return
+     */
     private JedisConnectionFactory jedisConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(config.getProperty("redis.host","localhost123"));
         redisStandaloneConfiguration.setPort(Integer.valueOf(config.getProperty("redis.port","6379")));
         redisStandaloneConfiguration.setDatabase(Integer.valueOf(config.getProperty("redis.database","0")));
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration);
+        jedisConnectionFactory.setUsePool(true);
         jedisConnectionFactory.afterPropertiesSet();
         return jedisConnectionFactory;
     }
