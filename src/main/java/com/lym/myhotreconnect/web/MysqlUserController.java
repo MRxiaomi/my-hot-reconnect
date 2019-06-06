@@ -16,33 +16,50 @@ public class MysqlUserController {
 
     /**
      * 根据id查询用户
+     *
      * @param id
      * @return
      */
     @GetMapping("/user/{id}")
-    public String findUserById(@PathVariable("id") Integer id){
+    public String findUserById(@PathVariable("id") Integer id) {
         return Optional.ofNullable(userService.findUserById(id)).orElseGet(User::new).toString();
     }
 
     /**
      * 保存用户
+     *
      * @param user
      * @return
      */
     @GetMapping("/user/save")
-    public String save(User user){
+    public String save(User user) {
         userService.save(user);
         return "save done!";
     }
 
     /**
      * 测试：事务进行过程中动态切换数据源，是否会造成影响
+     *
      * @param user
      * @return
      */
     @GetMapping("/user/test-tran")
-    public String testTran(User user){
-        userService.saveAndUpdate(user);
+    public String testTran(User user) {
+        System.out.println("MySql事务测试..." + System.currentTimeMillis());
+        userService.testTranChangeDataSource(user);
+        return "tran done!";
+    }
+
+    /**
+     * 测试：事务进行过程中动态切换数据源只读配置，是否会造成影响
+     *
+     * @param user
+     * @return
+     */
+    @GetMapping("/user/test-tran/read-only")
+    public String testReadOnly(User user) {
+        System.out.println("MySql事务测试ReadOnly..." + System.currentTimeMillis());
+        userService.testTranChangeDataSourceReadOnly(user);
         return "tran done!";
     }
 }

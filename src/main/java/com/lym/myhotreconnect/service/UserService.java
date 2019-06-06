@@ -7,5 +7,7 @@ public interface UserService {
 
     void save(User user);
 
-    void saveAndUpdate(User user);
+    void testTranChangeDataSource(User user);
+
+    void testTranChangeDataSourceReadOnly(User user);
 }
