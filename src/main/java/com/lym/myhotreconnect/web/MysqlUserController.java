@@ -24,4 +24,10 @@ public class MysqlUserController {
         userService.save(user);
         return "save done";
     }
+
+    @GetMapping("/user/test-tran")
+    public String testTran(User user){
+        userService.saveAndUpdate(user);
+        return "finish...";
+    }
 }
