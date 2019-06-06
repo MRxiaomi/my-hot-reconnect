@@ -60,12 +60,10 @@ public class DataSourceConfig{
 
     /**
      * 动态数据源
-     * @return
      */
     public class DynamicDataSource extends AbstractRoutingDataSource{
         /**
          * 执行SQL之前会执行该方法
-         * @return
          */
         @Override
         protected Object determineCurrentLookupKey() {

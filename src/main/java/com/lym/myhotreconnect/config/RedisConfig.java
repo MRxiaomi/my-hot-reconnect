@@ -19,17 +19,6 @@ import javax.annotation.Resource;
 
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
-//    @Value("${redis.host}")
-//    private String host;
-//    @Value("${redis.username}")
-//    private String masterName;
-//    @Value("${redis.password}")
-//    private String password;
-//    @Value("${redis.port}")
-//    private Integer port;
-//    @Value("${redis.database}")
-//    private Integer database;
-
     @ApolloConfig
     private Config config;
 
