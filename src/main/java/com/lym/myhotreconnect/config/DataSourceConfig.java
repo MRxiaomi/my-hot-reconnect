@@ -11,6 +11,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.util.Collections;
 
 @Configuration
 public class DataSourceConfig{
@@ -23,22 +25,23 @@ public class DataSourceConfig{
     private Config config;
 
     @Bean(MY_BEAN_DATA_SOURCE)
-    public DruidDataSource dynamicDataSource(){
-        return dataSource();
+    public DynamicDataSource dynamicDataSource(){
+        DynamicDataSource dynamicDataSource = new DynamicDataSource();
+        dynamicDataSource.setTargetDataSources(Collections.singletonMap(MY_DATA_SOURCE_KEY,dataSource()));
+        return dynamicDataSource;
     }
 
     /**
      * 数据库连接信息,从配置中心获取
      * @return
      */
-    private DruidDataSource dataSource(){
+    private DataSource dataSource(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setName(config.getProperty("data.source.name","dataSourceDefaultName"));
         druidDataSource.setUrl(config.getProperty("data.source.url","dataSourceDefaultUrl"));
         druidDataSource.setUsername(config.getProperty("data.source.username","dataSourceDefaultUsername"));
         druidDataSource.setPassword(config.getProperty("data.source.password",""));
-        String readOnly = config.getProperty("data.source.readonly","false");
-        druidDataSource.setDefaultReadOnly(Boolean.valueOf(readOnly));
+        druidDataSource.setDefaultReadOnly(Boolean.valueOf(config.getProperty("data.source.readonly","false")));
         return druidDataSource;
     }
 
@@ -46,10 +49,9 @@ public class DataSourceConfig{
     public void refreshDataSource(ApolloConfigChangeEvent apolloConfigChangeEvent){
         for (String key : apolloConfigChangeEvent.getConfigChangeEvent().changedKeys()) {
             if (key.startsWith("data.source.")) {
-                DruidDataSource druidDataSource = (DruidDataSource)applicationContext.getBean(MY_BEAN_DATA_SOURCE);
-                druidDataSource.setName(config.getProperty("data.source.name","dataSourceDefaultName"));
-                String readOnly = config.getProperty("data.source.readonly","false");
-                druidDataSource.setDefaultReadOnly(Boolean.valueOf(readOnly));
+                DataSourceConfig.DynamicDataSource dynamicDataSource = (DataSourceConfig.DynamicDataSource)applicationContext.getBean(MY_BEAN_DATA_SOURCE);
+                dynamicDataSource.setTargetDataSources(Collections.singletonMap(MY_DATA_SOURCE_KEY,dataSource()));
+                dynamicDataSource.afterPropertiesSet();
                 System.out.println("【数据库】动态切换成功...");
                 break;
             }
