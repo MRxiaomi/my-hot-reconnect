@@ -9,7 +9,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @RestController
 @MapperScan(basePackages = "com.lym.myhotreconnect.mapper")
-@EnableApolloConfig
+@EnableApolloConfig({"application","TEST2.GLOBAL.CONFIG"})
 public class MyHotReconnectApplication {
 
     public static void main(String[] args) {

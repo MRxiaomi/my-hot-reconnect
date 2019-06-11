@@ -37,6 +37,7 @@ public class DataSourceConfig{
      */
     private DataSource dataSource(){
         DruidDataSource druidDataSource = new DruidDataSource();
+        druidDataSource.close();
         druidDataSource.setName(config.getProperty("data.source.name","dataSourceDefaultName"));
         druidDataSource.setUrl(config.getProperty("data.source.url","dataSourceDefaultUrl"));
         druidDataSource.setUsername(config.getProperty("data.source.username","dataSourceDefaultUsername"));
