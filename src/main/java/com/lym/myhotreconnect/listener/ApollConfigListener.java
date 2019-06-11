@@ -45,7 +45,7 @@ public class ApollConfigListener implements ApplicationEventPublisherAware {
         for (String key : changeEvent.changedKeys()) {
             if (key.startsWith("data.source.name")) {
                 ConfigChange configChange = changeEvent.getChange("data.source.name");
-                System.out.println("【数据库】切换后的COMMON数据源：" + configChange.getNewValue());
+                System.out.println("【数据库】切换后的GLOBAL数据源：" + configChange.getNewValue());
                 break;
             }
         }
@@ -56,7 +56,7 @@ public class ApollConfigListener implements ApplicationEventPublisherAware {
     public void task(){
         new Thread(()->{
             while (true){
-                System.out.println("【数据库】数据源定时任务：" + dataSource);
+                System.out.println("【数据库】数据源打印定时任务：" + dataSource);
                 try {
                     Thread.sleep(2000L);
                 } catch (InterruptedException e) {
